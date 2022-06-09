@@ -38,6 +38,19 @@ $(() => {
 	
 var count = 0;
 
+function onlynumber(evt) {
+	
+	var theEvent = evt || window.event;
+	var key = theEvent.keyCode || theEvent.which;
+	key = String.fromCharCode( key );
+	var regex = /^[0-9.,]+$/;
+   //var regex = /^[0-9.]+$/;
+   if( !regex.test(key) ) {
+   	theEvent.returnValue = false;
+   	if(theEvent.preventDefault) theEvent.preventDefault();
+   }
+}
+
 //cria elementos de inputs ao iniciar documento
 function createInputs(){
 	for (var i = 0; i < 15; i++) {
@@ -46,13 +59,47 @@ function createInputs(){
 		clone.addClass("d-flex");	
 		let input = clone.find('input');
 		
-		input[0].name = 'description'+i;
-		input[1].name = 'price'+i;
-		input[2].name = 'tax'+i;
-		input[3].name = 'tot'+i;
-		
+		input.each(function(index, el) {
+			el.name = el.name + count;
+			el.id = el.id + count
 
-		//input[0].attr('name', 'decription'+i);
+			/**
+			* adiciona evento nos campos price
+			* e calcula tax e frete e adiciona valor total
+			**/
+			if(el.id === 'price'+count){
+				var key = count;
+				el.addEventListener('change', (e) =>{
+					let tax = parseFloat($('input#tax'+key).val().replace(',','.'));
+					let price = parseFloat(e.target.value.replace(',','.'));
+					let tot = 0;
+					tot = price + price * (tax / 100);
+
+					$('input#tot'+key).val(tot.toFixed(2).replace('.',','));					
+				});
+
+				el.addEventListener('keypress', () => onlynumber());
+			} 
+
+			/**
+			* adiciona evento nos campos tax
+			* e calcula tax e frete e adiciona valor total
+			**/
+			if(el.id === 'tax'+count){
+				var key = count;
+				el.addEventListener('change', (e) =>{
+					let price = parseFloat($('input#price'+key).val().replace(',','.'));
+					let tax = parseFloat(e.target.value.replace(',','.'));
+					let tot = 0;
+					tot = price + price * (tax / 100);
+
+					$('input#tot'+key).val(tot.toFixed(2).replace('.',','));					
+				});
+
+				el.addEventListener('keypress', () => onlynumber());
+			} 
+		});
+
 		let html = clone.removeClass("input-g-model");
 		$("form").append(html);
 		count++;
@@ -67,15 +114,11 @@ function addInput(){
 	let clone = $(".input-g-model").clone();
 	clone.addClass("d-flex");
 	let input = clone.find('input');
-	input[0].name = 'description'+ (count + 1);
-	input[1].name = 'price'+ (count + 1);
-	input[2].name = 'tax'+ (count + 1) ;
-	input[3].name = 'tot'+ (count + 1);
-	input[0].id = 'description'+ (count + 1);
-	input[1].id = 'price'+ (count + 1);
-	input[2].id = 'tax'+ (count + 1);
-	input[3].id = 'tot'+ (count + 1);
-
+	input.each(function(index, el) {
+		el.name = el.name + count++;
+		el.id = el.id + count++ 
+	});
+	
 	let html = clone.removeClass("input-g-model");
 	$("form").append(html);
 	
@@ -89,15 +132,7 @@ function addInput(){
 	//açoes da de click de botoes
 	$("#add").click(()=>addInput());
 
-var tot = 0;
 	createInputs();	
 
-	for (var i = 0; i < count; i++) {
-		$("input#price"+i).change(function(e){
-			tot = e.target.value;
-			$("input#tot"+i).val(tot);
-		});	
-	}
-	
 	
 });

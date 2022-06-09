@@ -17,19 +17,19 @@
 	<div class=" input-g-model mb-3 ">
 			<div class="me-3 col-7 input">
 				<label for="s"  class="form-label ">Descrição:</label>
-				<input type="text" name="description1" class="form-control form-control-sm" id="desc1" aria-describedby="emailHelp">
-			</div>
-			<div class="me-3 input">
-				<label  class="form-label">Preço:</label>
-				<input type="text" name="price1" class="form-control form-control-sm"  id="price" aria-describedby="emailHelp">
+				<input type="text" name="description" class="form-control form-control-sm" id="desc" aria-describedby="emailHelp">
 			</div>
 			<div class="me-3 input">
 				<label  class="form-label">Sti:</label>
-				<input type="text" name="tax1" class="form-control form-control-sm"  id="tax1" aria-describedby="emailHelp">
+				<input type="text" name="tax" min="0.01" step="0.01" class="form-control form-control-sm" value="0" id="tax" aria-describedby="emailHelp">
+			</div>
+			<div class="me-3 input">
+				<label  class="form-label">Preço:</label>
+				<input type="text" name="price" min="0.01" step="0.01" class="form-control form-control-sm" value="0" id="price" aria-describedby="emailHelp">
 			</div>
 			<div class="me-3 input">
 				<label  class="form-label">Total:</label>
-				<input type="text" name="tot1" class="form-control form-control-sm" id="tot" aria-describedby="emailHelp">
+				<input type="text" name="tot" min="0.01" step="0.01" class="form-control form-control-sm" id="tot" aria-describedby="emailHelp">
 			</div>
 		</div>
 	<form action="src/actions/Gravar.php" method="post">
