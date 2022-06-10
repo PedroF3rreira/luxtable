@@ -1,0 +1,23 @@
+{
+    "name": "pedro/luxtable",
+    "description": "um sistema para gerar pdf de tabelha de produtos",
+    "type": "sistema",
+    "license": "propietary\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[Dr\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C",
+    "autoload": {
+        "psr-4": {
+            "Source\\": "src/"
+        },
+        "files":[
+            "src/Config.php"
+        ]
+    },
+    "authors": [
+        {
+            "name": "PedroF3rreira",
+            "email": "pedro-edu19@outlook.com"
+        }
+    ],
+    "require": {
+        "coffeecode/datalayer": "^2.0"
+    }
+}
