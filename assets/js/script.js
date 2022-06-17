@@ -112,17 +112,56 @@ function addInput(){
 	
 
 	let clone = $(".input-g-model").clone();
+
 	clone.addClass("d-flex");
+	
 	let input = clone.find('input');
+	
+	count++;
+	
 	input.each(function(index, el) {
-		el.name = el.name + count++;
-		el.id = el.id + count++ 
-	});
+		el.name = el.name + count;
+		el.id = el.id + count;
+
+		/**
+			* adiciona evento nos campos price
+			* e calcula tax e frete e adiciona valor total
+			**/
+			if(el.id === 'price'+count){
+				var key = count;
+				el.addEventListener('change', (e) =>{
+					let tax = parseFloat($('input#tax'+key).val().replace(',','.'));
+					let price = parseFloat(e.target.value.replace(',','.'));
+					let tot = 0;
+					tot = price + price * (tax / 100);
+
+					$('input#tot'+key).val(tot.toFixed(2).replace('.',','));					
+				});
+
+				el.addEventListener('keypress', () => onlynumber());
+			} 
+
+			/**
+			* adiciona evento nos campos tax
+			* e calcula tax e frete e adiciona valor total
+			**/
+			if(el.id === 'tax'+count){
+				var key = count;
+				el.addEventListener('change', (e) =>{
+					let price = parseFloat($('input#price'+key).val().replace(',','.'));
+					let tax = parseFloat(e.target.value.replace(',','.'));
+					let tot = 0;
+					tot = price + price * (tax / 100);
+
+					$('input#tot'+key).val(tot.toFixed(2).replace('.',','));					
+				});
+
+				el.addEventListener('keypress', () => onlynumber());
+			} 
+		});
 	
 	let html = clone.removeClass("input-g-model");
 	$("form").append(html);
-	
-	count++;
 
 	$("#count").val(count);
 	
