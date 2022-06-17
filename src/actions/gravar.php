@@ -10,12 +10,14 @@ $length = filter_input(INPUT_POST, 'count');
 
 for($i = 0; $i < $length; $i++){
 	
-	$p = new Product();
-	$p->description = filter_input(INPUT_POST, 'description'.$i)??'';
-	$p->price = filter_input(INPUT_POST, 'price'.$i)??'';
-	
-	if(!empty($p)){
+	if(filter_input(INPUT_POST, 'description'.$i) || filter_input(INPUT_POST, 'price'.$i)){
+		$p = new Product();
+		$p->description = filter_input(INPUT_POST, 'description'.$i);
+		$p->price = str_replace(',','.',filter_input(INPUT_POST, 'price'.$i));
 		$p->save();
+
+		echo filter_input(INPUT_POST, 'price'.$i);
 	}
-	var_dump($p);
+	
 }	
+echo "salvo com suscesso!";
